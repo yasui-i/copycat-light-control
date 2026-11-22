@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.local.copycatlight.mixin",
+  "plugin": "dev.local.copycatlight.mixin.OptionalLightingMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["BlockStateLightMixin", "MaterialLightUpdateMixin", "CreateMaterialLightUpdateMixin", "LevelLightCacheMixin"],
+  "client": ["client.CopycatSurfaceLightMixin", "client.SurfaceBlockChangeMixin", "client.SurfaceRenderRegionMixin", "client.SodiumSurfaceLightMixin", "client.SodiumRenderRegionMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

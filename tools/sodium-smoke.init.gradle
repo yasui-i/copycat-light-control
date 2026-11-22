@@ -1,0 +1,13 @@
+allprojects {
+    afterEvaluate {
+        if (!project.hasProperty('sodiumSmoke')) return
+        sourceSets.main.java.srcDir('src/sodiumSmoke/java')
+        // Dev-only fixture combines the service-loader support classes with the core;
+        // the original user mod and the release artifact are never modified.
+        dependencies.add('runtimeOnly', fileTree(dir: 'sodium-libs/test-runtime', include: '*.jar'))
+        neoForge.runs.named('client') { systemProperty 'copycat_light_control.sodiumSmoke', 'true' }
+        tasks.named('jar') {
+            doFirst { throw new GradleException('Sodium smoke classes must never enter a release JAR.') }
+        }
+    }
+}

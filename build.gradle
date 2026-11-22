@@ -1,0 +1,46 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+group = 'dev.local.copycatlight'
+version = '0.2.1'
+base.archivesName = 'copycat-light-control'
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = '21.1.248'
+    parchment { minecraftVersion = '1.21.1'; mappingsVersion = '2024.11.17' }
+    mods { copycat_light_control { sourceSet(sourceSets.main) } }
+    runs {
+        server {
+            server(); programArgument '--nogui'
+            if (project.hasProperty('lightSmoke')) {
+                systemProperty 'copycat_light_control.smoke', 'true'
+                if (project.hasProperty('reloadSmoke')) systemProperty 'copycat_light_control.reloadSmoke', 'true'
+                if (project.hasProperty('sableSmoke')) systemProperty 'copycat_light_control.sableSmoke', 'true'
+                gameDirectory = project.layout.projectDirectory.dir('run-smoke')
+            }
+        }
+        client { client() }
+    }
+}
+if (project.hasProperty('lightSmoke')) sourceSets.main.java.srcDir('src/smoke/java')
+if (project.hasProperty('sableSmoke')) sourceSets.main.java.srcDir('src/sableSmoke/java')
+dependencies {
+    implementation fileTree(dir: 'libs', include: '*.jar')
+    compileOnly fileTree(dir: 'optional-libs', include: '*.jar')
+    compileOnly fileTree(dir: 'compile-libs', include: '*.jar')
+    if (project.hasProperty('sableSmoke')) runtimeOnly fileTree(dir: 'optional-libs', include: '*.jar')
+}
+configurations.configureEach {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'net.neoforged' && details.requested.name == 'neoform-runtime')
+            details.useVersion('2.0.24')
+    }
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+tasks.named('jar') {
+    if (project.hasProperty('lightSmoke')) doFirst { throw new GradleException('Build releases without lightSmoke.') }
+    from('LICENSE')
+}
