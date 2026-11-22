@@ -1,7 +1,7 @@
-# Copycat Light Control / 伪装方块遮光补丁
+# Copycat Light Control
 
-适用于 Minecraft 1.21.1、NeoForge、Create 6.0.x 与 Copycats+ 3.0.9。根据填充材质决定伪装方块是否透光，修复内缩面的光照。安装 Sable 2.0.6 时也支持物理车厢的内外分区照明。
+适用于 Minecraft 1.21.1 / NeoForge、Create 6.0.x 和 Copycats+ 3.0.9。不透明填充会遮光，普通玻璃可透光。也修复了内缩面的光照，并支持 Sable 2.0.6 物理车厢内外分开采光。
 
-[使用指南与开发依赖](README.zh-CN.md) · [许可](LICENSE)
+把本模组放入 `mods/`。多人游戏在客户端和服务器都安装。已有方块无需重新放置。
 
-构建需要 Java 21。按使用指南将相应模组 JAR 放入 `libs/`、`optional-libs/` 和 `compile-libs/`，再运行 `./gradlew build`（Windows 使用 `.\gradlew.bat build`）。产物位于 `build/libs/`。开发依赖 JAR 不随 Git 仓库分发。
+构建需要 Java 21。将 Copycats+、Create、Flywheel、Ponder、Registrate 放入 `libs/`，Sable、Sable Companion、Sable Rapier 放入 `optional-libs/`，Sodium 0.8.13 的内部 JAR、Fabric Renderer API 与 Fabric API Base 放入 `compile-libs/`。运行 `./gradlew build`（Windows：`.\gradlew.bat build`），产物在 `build/libs/`。
