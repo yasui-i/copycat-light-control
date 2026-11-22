@@ -25,3 +25,15 @@ local.properties
 *.pfx
 *.p12
 *.jks
+
+# Local smoke tests and setup
+/src/smoke/
+/src/sableSmoke/
+/src/clientSmoke/
+/src/sodiumSmoke/
+/smoke.init.gradle
+/tools/client-smoke.init.gradle
+/tools/sodium-smoke.init.gradle
+/tools/verify.ps1
+/tools/verify-client.ps1
+/tools/verify-sodium.ps1

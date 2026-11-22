@@ -15,23 +15,14 @@ neoForge {
     runs {
         server {
             server(); programArgument '--nogui'
-            if (project.hasProperty('lightSmoke')) {
-                systemProperty 'copycat_light_control.smoke', 'true'
-                if (project.hasProperty('reloadSmoke')) systemProperty 'copycat_light_control.reloadSmoke', 'true'
-                if (project.hasProperty('sableSmoke')) systemProperty 'copycat_light_control.sableSmoke', 'true'
-                gameDirectory = project.layout.projectDirectory.dir('run-smoke')
-            }
         }
         client { client() }
     }
 }
-if (project.hasProperty('lightSmoke')) sourceSets.main.java.srcDir('src/smoke/java')
-if (project.hasProperty('sableSmoke')) sourceSets.main.java.srcDir('src/sableSmoke/java')
 dependencies {
     implementation fileTree(dir: 'libs', include: '*.jar')
     compileOnly fileTree(dir: 'optional-libs', include: '*.jar')
     compileOnly fileTree(dir: 'compile-libs', include: '*.jar')
-    if (project.hasProperty('sableSmoke')) runtimeOnly fileTree(dir: 'optional-libs', include: '*.jar')
 }
 configurations.configureEach {
     resolutionStrategy.eachDependency { details ->
@@ -41,6 +32,5 @@ configurations.configureEach {
 }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
 tasks.named('jar') {
-    if (project.hasProperty('lightSmoke')) doFirst { throw new GradleException('Build releases without lightSmoke.') }
     from('LICENSE')
 }
